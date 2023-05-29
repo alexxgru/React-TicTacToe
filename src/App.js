@@ -31,24 +31,25 @@ function Board({ xIsNext, squares, onPlay }) {
     status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
+
+
   return (
     <Fragment>
       <div className="status">{status}</div>
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+      {Array(3).fill(null).map((_, row) => (
+      <div className="board-row" key={row}>
+        {Array(3).fill(null).map((_, col) => {
+          const index = row * 3 + col;
+          return (
+            <Square
+              key={index}
+              value={squares[index]}
+              onSquareClick={() => handleClick(index)}
+            />
+          );
+        })}
       </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+    ))}
     </ Fragment>
   );
 }
@@ -75,6 +76,14 @@ export default function Game() {
       description = 'Go to move #' + move;
     } else {
       description = 'Go to game start';
+    }
+
+    if (move === history.length - 1){
+      return (
+        <li key={move}>
+          <p>You are at move # {move}</p>
+        </li>
+      );
     }
     return (
       <li key={move}>

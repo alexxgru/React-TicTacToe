@@ -45,7 +45,7 @@ function Board({ xIsNext, squares, onPlay }) {
               key={index}
               value={squares[index]}
               onSquareClick={() => handleClick(index)}
-            />
+            /> 
           );
         })}
       </div>
